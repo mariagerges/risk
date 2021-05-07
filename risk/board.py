@@ -126,7 +126,7 @@ class Board(object):
             bool: True if the path is an attack path
         '''
         if self.is_valid_path(path) == True:
-            if len(path) <2:
+            if len(path) < 2:
                 return False
             for i in range(1, len(path) - 1):
                 if self.owner(path[0]) == self.owner(path[i]):
@@ -185,7 +185,7 @@ class Board(object):
                     copy_stack.append(current_id)
                     queue.append(copy_stack)
                     territories.remove(current_id)
-        
+
         if source == 31:
             return [31, 16, 23]
 
@@ -240,7 +240,6 @@ class Board(object):
         Returns:
             [int]: a list of territory_ids representing the valid attack path; if no path exists, then it returns None instead
         '''
-        
         if source == target:
             return None
         dictionary = {}
@@ -276,7 +275,6 @@ class Board(object):
                     pqueue[adj] = priority
             visited.add(adj)
         return None
-    
 
     def can_attack(self, source, target):
         '''
@@ -290,7 +288,6 @@ class Board(object):
             return False
         else:
             return True
-
 
     # ======================= #
     # == Continent Methods == #
@@ -468,8 +465,8 @@ class Board(object):
             filename (str): if given, the plot will be saved to the given filename instead of displayed
         """
         im = plt.imread(os.getcwd() + '/img/risk.png')
-        dpi=96
-        img_width=800
+        dpi = 96
+        img_width = 800
         fig, ax = plt.subplots(figsize=(img_width/dpi, 300/dpi), dpi=dpi)
         _ = plt.imshow(im)
         plt.axis('off')
@@ -480,13 +477,12 @@ class Board(object):
             if not self.is_valid_path(xs):
                 print('WARNING: not a valid path')
             coor = risk.definitions.territory_locations[xs[0]]
-            verts=[(coor[0]*1.2, coor[1]*1.22 + 25)]
-            codes = [ Path.MOVETO ]
-            for i,x in enumerate(xs[1:]):
-                if (xs[i]==19 and xs[i+1]==1) or (xs[i]==1 and xs[i+1]==19):
+            verts=[(coor[0] * 1.2, coor[1] * 1.22 + 25)]
+            codes = [Path.MOVETO]
+            for i, x in enumerate(xs[1:]):
+                if (xs[i] == 19 and xs[i + 1] == 1) or (xs[i] == 1 and xs[i + 1] == 19):
                     coor = risk.definitions.territory_locations[x]
-                    #verts.append((coor[0]*1.2, coor[1]*1.22 + 25))
-                    verts.append((1000,-200))
+                    verts.append((1000, -200))
                     verts.append((coor[0]*1.2, coor[1]*1.22 + 25))
                     codes.append(Path.CURVE3)
                     codes.append(Path.CURVE3)
