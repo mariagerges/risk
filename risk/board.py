@@ -87,7 +87,6 @@ class Board(object):
         neighbor_ids = risk.definitions.territory_neighbors[territory_id]
         return (t for t in self.data if (t.player_id == player_id and t.territory_id in neighbor_ids))
 
-
     # ================== #
     # == Path Methods == #
     # ================== #
@@ -112,7 +111,6 @@ class Board(object):
                 return False
         return True
 
-
     def is_valid_attack_path(self, path):
         '''
         The rules of Risk state that when attacking,
@@ -130,7 +128,7 @@ class Board(object):
         if self.is_valid_path(path) == True:
             if len(path) <2:
                 return False
-            for i in range(1, len(path)-1):
+            for i in range(1, len(path) - 1):
                 if self.owner(path[0]) == self.owner(path[i]):
                     return False
             return True
@@ -166,7 +164,6 @@ class Board(object):
         Returns:
             [int]: a valid path between source and target that has minimum length; this path is guaranteed to exist
         '''
-    
         if source == target:
             return [source]
         stack = []
@@ -179,15 +176,15 @@ class Board(object):
         while len(queue) > 0:
            current_stack = queue.popleft()
            for current_id in territories:
-               current_loc = current_stack[-1]
-               if current_loc in risk.definitions.territory_neighbors[current_id]:
-                   if current_id == target:
-                       current_stack.append(current_id)
-                       return current_stack
-                   copy_stack = copy.copy(current_stack)
-                   copy_stack.append(current_id)
-                   queue.append(copy_stack)
-                   territories.remove(current_id)
+                current_loc = current_stack[-1]
+                if current_loc in risk.definitions.territory_neighbors[current_id]:
+                    if current_id == target:
+                        current_stack.append(current_id)
+                        return current_stack
+                    copy_stack = copy.copy(current_stack)
+                    copy_stack.append(current_id)
+                    queue.append(copy_stack)
+                    territories.remove(current_id)
         
         if source == 31:
             return [31, 16, 23]
